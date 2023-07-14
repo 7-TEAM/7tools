@@ -2,22 +2,15 @@
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Tools.Models;
+using SvTools.Models;
 
 namespace SvTools.Services;
 
 public class FileService : IFileService
 {
-    private readonly string _fileName;
-
-    public FileService(string fileName)
+    public void CreateFileIfNotExists(string fileName)
     {
-        _fileName = $"{fileName}.json";
-    }
-
-    public void CreateFileIfNotExists()
-    {
-        File.Create(_fileName);
+        File.Create(fileName);
     }
 
     public string ReadContent(string fileName)
