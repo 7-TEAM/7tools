@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Tools.Models;
+using SvTools.Models;
 
 namespace SvTools.Services;
 
@@ -41,7 +41,7 @@ public class LanguageService
 
     private Language[] ModifyLanguagesFromFile(Language[] languages, string fileName)
     {
-        _file.CreateFileIfNotExists();
+        _file.CreateFileIfNotExists(fileName);
         var jsonLanguages = _file.ReadJson(_file.ReadContent(fileName));
         var modifiedLanguages = new List<Language>();
         foreach (var language in languages)

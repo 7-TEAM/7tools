@@ -14,6 +14,6 @@
     </Application.Styles>
 
     <Application.Resources>
-        <FontFamily x:Key="Aileron">avares://7tools/Assets/fonts/Aileron/Aileron-BoldItalic.ttf</FontFamily>
+        <FontFamily x:Key="Aileron">avares://Assets/fonts/Aileron/Aileron-BoldItalic.ttf</FontFamily>
     </Application.Resources>
 </Application>
