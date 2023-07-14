@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Tools.Models;
 
 namespace SvTools.Services;
@@ -11,7 +10,6 @@ public class LanguageService
 {
     private readonly IFileService _file;
     private readonly IHttpService _http;
-    private const string Url = "https://xyz.pl/api/";
 
     public LanguageService(IFileService file, IHttpService http)
     {
@@ -19,20 +17,18 @@ public class LanguageService
         _http = http;
     }
 
-
-    
     public async Task<Language[]> GetLanguages(string endpoint, string fileName)
     {
-        var languagesFromHttp = GetLanguagesFromHttp($"{Url}{endpoint}");
+        var languagesFromHttp = GetLanguagesFromHttp($"{endpoint}");
         return ModifyLanguagesFromFile(await languagesFromHttp, fileName);
     }
 
-    private async Task<Language[]> GetLanguagesFromHttp(string url)
+    private async Task<Language[]> GetLanguagesFromHttp(string endpoint)
     {
         string response;
         try
         {
-            response = await _http.SendGet(url);
+            response = await _http.SendGet(endpoint);
         }
         catch (IOException)
         {
