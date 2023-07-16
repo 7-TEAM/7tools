@@ -14,5 +14,5 @@ try
 }
 catch (Exception)
 {
-    
+    //coś poszło nie tak przy pobieraniu języków
 }
