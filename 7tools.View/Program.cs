@@ -2,7 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 
-namespace SvTools;
+namespace SvTools.View;
 
 class Program
 {

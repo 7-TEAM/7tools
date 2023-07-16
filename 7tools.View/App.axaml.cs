@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SvTools.ViewModels;
-using SvTools.Views;
+using SvTools.View.ViewModels;
+using SvTools.View.Views;
 
-namespace SvTools;
+namespace SvTools.View;
 
 public partial class App : Application
 {

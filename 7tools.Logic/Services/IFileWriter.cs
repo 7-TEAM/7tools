@@ -2,5 +2,5 @@
 
 public interface IFileWriter
 {
-    void CreateFileIfNotExists();
+    void CreateFileIfNotExists(string fileName);
 }

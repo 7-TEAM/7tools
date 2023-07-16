@@ -21,11 +21,10 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 
     <ItemGroup>
-      <Folder Include="Exceptions\" />
+      <ProjectReference Include="..\7tools.Logic\7tools.Logic.csproj" />
     </ItemGroup>
 </Project>

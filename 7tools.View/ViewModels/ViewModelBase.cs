@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace SvTools.ViewModels;
+namespace SvTools.View.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {
