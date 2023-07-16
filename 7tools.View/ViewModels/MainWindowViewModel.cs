@@ -12,18 +12,17 @@ namespace SvTools.View.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public List<Language> Languages {get; set;}
+    private const string FileName = "config.json";
 
     public MainWindowViewModel(){
         Languages = new List<Language>();
+        new Thread(UpdateLanguages).Start();
+    }
 
-        new Thread(new ThreadStart(UpdateLanguages)).Start();
-    }   
-
-    public async void UpdateLanguages(){
-        const string fileName = "config.json";
+    public void UpdateLanguages(){
         var fileService = new FileService();
         var httpService = new HttpService(new HttpClient());
-        var languageService = new LanguageService(fileService, httpService, fileName);
+        var languageService = new LanguageService(fileService, httpService, FileName);
 
         Languages.Add(new Language{Name="Python"});
         Languages.Add(new Language{Name="Rust"});
