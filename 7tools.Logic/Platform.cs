@@ -1,4 +1,4 @@
-﻿namespace Tools.Models;
+﻿namespace SvTools.Models;
 
 public enum Platform
 {

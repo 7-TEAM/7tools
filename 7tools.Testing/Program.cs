@@ -1,6 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using Newtonsoft.Json;
+using SvTools.Models.Extensions;
 using SvTools.Services;
-using Tools.Models.Extensions;
+
 
 const string fileName = "config.json";
 var languageService = new LanguageService(new FileService(), new HttpService(new HttpClient()), fileName);
@@ -8,9 +9,10 @@ var languageService = new LanguageService(new FileService(), new HttpService(new
 //to powinno byc wykonywane podczas zapisania aplikacji (gdy uzytkownik wcisnie przycisk zapisz) i co jakis czas, zeby aktualizowac gui
 try
 {
-    var languages = await languageService.GetLanguages($"api/languages?platform={RuntimeInformationExtensions.PlatformName()}");
+    var languages =
+        await languageService.GetLanguages($"api/languages?platform={RuntimeInformationExtensions.PlatformName()}");
 }
-catch (NullReferenceException)
+catch (Exception)
 {
-    //użytkownik ma niewykrywalny system
+    
 }

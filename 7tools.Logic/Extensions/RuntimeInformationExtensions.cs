@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Tools.Models.Extensions;
+namespace SvTools.Models.Extensions;
 
 public static class RuntimeInformationExtensions
 {

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Tools.Models;
+using SvTools.Models;
 
 namespace SvTools.Services;
 
@@ -31,7 +31,7 @@ public class LanguageService
         }
         catch (IOException)
         {
-            return null;
+            throw;
         }
 
         var jsonResponse = _file.ReadJson(response);

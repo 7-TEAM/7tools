@@ -2,7 +2,7 @@
 
 public class HttpService : IHttpService
 {
-    private const string Url = "https://xyz.com/api/";
+    private const string Url = "https://txtcreator.pl/";
     private readonly HttpClient _client;
 
     public HttpService(HttpClient client)
