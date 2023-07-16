@@ -7,5 +7,5 @@ public class Language
     public float CurrentVersion { get; init; }
     public string ImageUrl { get; init; }
     public string[] DownloadUrls { get; set; }
-    public LocalLanguageSettings LocalLanguageSettings { get; set; }
+    public LocalLanguage LocalLanguage { get; set; } = new();
 }

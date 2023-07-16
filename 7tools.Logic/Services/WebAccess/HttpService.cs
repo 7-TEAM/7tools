@@ -1,4 +1,4 @@
-﻿namespace SvTools.Services;
+﻿namespace SvTools.Services.WebAccess;
 
 public class HttpService : IHttpService
 {

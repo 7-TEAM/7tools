@@ -1,6 +1,6 @@
 ﻿namespace SvTools.Models;
 
-public class LocalLanguageSettings
+public class LocalLanguage
 {
     public float InstalledVersion { get; set; }
     public string DownloadPath { get; set; }

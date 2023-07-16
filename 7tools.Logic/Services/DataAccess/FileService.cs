@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace SvTools.Services;
+namespace SvTools.Services.DataAccess;
 
 public class FileService : IFileService
 {
-    public void CreateFileIfNotExists(string fileName)
+    public bool CreateFileIfNotExists(string fileName)
     {
+        if (File.Exists(fileName)) return false;
         File.Create(fileName);
+        return true;
+
     }
 
     public string ReadContent(string fileName)
@@ -17,5 +20,10 @@ public class FileService : IFileService
     public JObject ReadJson(string content)
     {
         return JObject.Parse(content);
+    }
+
+    public void Write(string fileName, string content)
+    {
+        File.WriteAllText(fileName, content);
     }
 }

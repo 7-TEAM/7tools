@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Net.Http;
-using System;
 
 using SvTools.Models;
 using SvTools.Services;
-using SvTools.Models.Extensions;
+using SvTools.Services.DataAccess;
+using SvTools.Services.WebAccess;
 
 namespace SvTools.View.ViewModels;
 
