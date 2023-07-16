@@ -1,8 +1,4 @@
-﻿using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace SvTools.Services;
+﻿namespace SvTools.Services;
 
 public class HttpService : IHttpService
 {
@@ -16,7 +12,7 @@ public class HttpService : IHttpService
 
     public async Task<string> SendRequest(string endpoint)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public async Task<string> SendGet(string endpoint)
@@ -28,6 +24,6 @@ public class HttpService : IHttpService
 
     public async Task<string> SendPost(string endpoint)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }

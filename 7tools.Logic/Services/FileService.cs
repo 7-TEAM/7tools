@@ -4,7 +4,6 @@ namespace SvTools.Services;
 
 public class FileService : IFileService
 {
-
     public void CreateFileIfNotExists(string fileName)
     {
         File.Create(fileName);

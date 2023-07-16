@@ -6,8 +6,8 @@ namespace SvTools.Services;
 public class LanguageService
 {
     private readonly IFileService _file;
+    private readonly string _fileName;
     private readonly IHttpService _http;
-    private readonly string _fileName; 
 
     public LanguageService(IFileService file, IHttpService http, string fileName)
     {
@@ -16,7 +16,13 @@ public class LanguageService
         _fileName = fileName;
     }
 
-    public async Task<Language[]> GetLanguagesFromHttp(string endpoint)
+    public async Task<Language[]> GetLanguages(string endpoint)
+    {
+        var languagesFromHttp = await GetLanguagesFromHttp($"{endpoint}");
+        return ModifyLanguagesFromFile(languagesFromHttp);
+    }
+
+    private async Task<Language[]> GetLanguagesFromHttp(string endpoint)
     {
         string response;
         try
@@ -32,15 +38,16 @@ public class LanguageService
         return JsonConvert.DeserializeObject<List<Language>>(jsonResponse.ToString()).ToArray();
     }
 
-    public Language[] ModifyLanguagesFromFile(Language[] languages)
+    private Language[] ModifyLanguagesFromFile(Language[] languages)
     {
         _file.CreateFileIfNotExists(_fileName);
         var jsonLanguages = _file.ReadJson(_file.ReadContent(_fileName));
         var modifiedLanguages = new List<Language>();
         foreach (var language in languages)
         {
-            var localLanguageSettings = language.LocalLanguageSettings; 
-            var localLanguageSettingsFromJson = JsonConvert.DeserializeObject<LocalLanguageSettings>(jsonLanguages[language.Id + ""].ToString());
+            var localLanguageSettings = language.LocalLanguageSettings;
+            var localLanguageSettingsFromJson =
+                JsonConvert.DeserializeObject<LocalLanguageSettings>(jsonLanguages[language.Id + ""].ToString());
             if (localLanguageSettingsFromJson is not null)
             {
                 localLanguageSettings.InstalledVersion = localLanguageSettingsFromJson.InstalledVersion;
@@ -48,9 +55,10 @@ public class LanguageService
                 localLanguageSettings.IsChecked = localLanguageSettingsFromJson.IsChecked;
                 localLanguageSettings.ShouldBeEnvironmentVariable = localLanguageSettingsFromJson.IsChecked;
             }
+
             modifiedLanguages.Add(language);
         }
-        
+
         return modifiedLanguages.ToArray();
     }
 }

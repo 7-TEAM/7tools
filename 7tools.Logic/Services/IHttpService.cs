@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace SvTools.Services;
+﻿namespace SvTools.Services;
 
 public interface IHttpService
 {

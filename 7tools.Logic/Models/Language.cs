@@ -8,6 +8,4 @@ public class Language
     public string ImageUrl { get; init; }
     public string[] DownloadUrls { get; set; }
     public LocalLanguageSettings LocalLanguageSettings { get; set; }
-
-    
 }
