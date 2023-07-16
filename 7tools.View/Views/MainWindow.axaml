@@ -13,35 +13,41 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
     
-    <StackPanel>
-        <ScrollViewer 
-            HorizontalScrollBarVisibility="Auto" 
-            VerticalScrollBarVisibility="Disabled"
-            VerticalAlignment="Center"
-            AllowAutoHide="false"
-            Width="900">
-            <ItemsControl 
-                ItemsSource="{Binding Languages}"
-                Margin="25">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Rows="2"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ToggleButton Content="{Binding Name}" Width="180" Height="150" Margin="5,5" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        <Button 
-            Content="Pobierz" 
-            Width="1000"
-            Height="50"
-            Margin="0,20"
-            HorizontalAlignment="Center"/>
-    </StackPanel>
+    <Viewbox>
+        <StackPanel>
+            <TextBlock 
+                Text = "7TOOLS"
+                Margin = "10, 20"/>
+            <ScrollViewer 
+                HorizontalScrollBarVisibility="Auto" 
+                VerticalScrollBarVisibility="Disabled"
+                VerticalAlignment="Center"
+                AllowAutoHide="false"
+                Margin = "5,0"
+                Width="950">
+                <ItemsControl 
+                    ItemsSource="{Binding Languages}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="2"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleButton Content="{Binding Name}" Width="180" Height="150" Margin="5,5" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button 
+                Content="Pobierz" 
+                Width="950"
+                Height="50"
+                Margin="0,20"
+                HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Viewbox>
+    
     
     
 
