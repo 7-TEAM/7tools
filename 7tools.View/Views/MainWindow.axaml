@@ -10,11 +10,39 @@
         Title="SvTools.View">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel />
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    
+    <StackPanel>
+        <ScrollViewer 
+            HorizontalScrollBarVisibility="Auto" 
+            VerticalScrollBarVisibility="Disabled"
+            VerticalAlignment="Center"
+            AllowAutoHide="false"
+            Width="900">
+            <ItemsControl 
+                ItemsSource="{Binding Languages}"
+                Margin="25">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="2"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton Content="{Binding Name}" Width="180" Height="150" Margin="5,5" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Button 
+            Content="Pobierz" 
+            Width="1000"
+            Height="50"
+            Margin="0,20"
+            HorizontalAlignment="Center"/>
+    </StackPanel>
+    
+    
 
 </Window>
