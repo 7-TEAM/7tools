@@ -12,24 +12,24 @@
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
-    
+
     <Viewbox>
         <StackPanel>
-            <TextBlock 
-                Text = "7TOOLS"
-                Margin = "10, 20"/>
-            <ScrollViewer 
-                HorizontalScrollBarVisibility="Auto" 
+            <TextBlock
+                Text="7TOOLS"
+                Margin="10, 20" />
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Disabled"
                 VerticalAlignment="Center"
                 AllowAutoHide="false"
-                Margin = "5,0"
+                Margin="5,0"
                 Width="950">
-                <ItemsControl 
+                <ItemsControl
                     ItemsSource="{Binding Languages}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Rows="2"/>
+                            <UniformGrid Rows="2" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -39,16 +39,14 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <Button 
-                Content="Pobierz" 
+            <Button
+                Content="Pobierz"
                 Width="950"
                 Height="50"
                 Margin="0,20"
-                HorizontalAlignment="Center"/>
+                HorizontalAlignment="Center" />
         </StackPanel>
     </Viewbox>
-    
-    
-    
+
 
 </Window>

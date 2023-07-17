@@ -12,11 +12,7 @@ public static class RuntimeInformationExtensions
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             platform = "windows";
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) platform = "macos";
-        if (platform == null)
-        {
-            throw new NullReferenceException("Incorrect platform detected!");
-        }
+        if (platform == null) throw new NullReferenceException("Incorrect platform detected!");
         return platform;
-        
     }
 }
