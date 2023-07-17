@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System;
+
+using System.ComponentModel; 
+using System.Runtime.CompilerServices; 
+using System.Diagnostics;
 using System.Threading.Tasks;
 using SvTools.Models;
 using SvTools.Models.Extensions;
@@ -11,7 +15,7 @@ using Timer = System.Timers.Timer;
 
 namespace SvTools.View.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
     public List<Language> Languages {get; set;}
 
@@ -20,6 +24,8 @@ public class MainWindowViewModel : ViewModelBase
     private const string FileName = "config.json";
     private readonly LanguageService _languageService;
     private readonly DownloadService _downloadService;
+
+    public event PropertyChangedEventHandler PropertyChanged; 
 
     public MainWindowViewModel()
     {
@@ -43,6 +49,7 @@ public class MainWindowViewModel : ViewModelBase
                         $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}"
                     )
                 );
+                NotifyPropertyChanged(nameof(Languages));
             }
             catch (Exception)
             {
@@ -53,4 +60,9 @@ public class MainWindowViewModel : ViewModelBase
         timer.Elapsed += (_, _) => UpdateTimerAsync().GetAwaiter().GetResult();
         timer.Enabled = true;
     }
+
+    private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")  
+    {  
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }  
 }
