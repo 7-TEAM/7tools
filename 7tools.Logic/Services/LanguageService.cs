@@ -19,9 +19,9 @@ public class LanguageService : ILanguageService
         _fileName = fileName;
     }
 
-    public async Task<Language[]> GetLanguages(string endpoint)
+    public async Task<Language[]> GetLanguagesAsync(string endpoint)
     {
-        var languagesFromHttp = await GetLanguagesFromHttp($"{endpoint}");
+        var languagesFromHttp = await GetLanguagesFromHttpAsync($"{endpoint}");
         return ModifyLanguagesFromFile(languagesFromHttp);
     }
 
@@ -39,7 +39,7 @@ public class LanguageService : ILanguageService
         return _file.ReadJsonObject(_file.ReadContent(_fileName));
     }
 
-    private async Task<Language[]> GetLanguagesFromHttp(string endpoint)
+    private async Task<Language[]> GetLanguagesFromHttpAsync(string endpoint)
     {
         string response;
         response = await _http.SendGet(endpoint);

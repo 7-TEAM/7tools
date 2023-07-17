@@ -5,12 +5,15 @@ using SvTools.Services.DataAccess;
 using SvTools.Services.WebAccess;
 
 const string fileName = "config.json";
-var languageService = new LanguageService(new FileService(), new HttpService(new HttpClient()), fileName);
+var httpService = new HttpService(new HttpClient());
+var languageService = new LanguageService(new FileService(), httpService, fileName);
+var downloadService = new DownloadService(httpService);
 //to powinno byc co jakis czas, zeby aktualizowac gui
 try
 {
     var languages =
-        await languageService.GetLanguages($"api/languages?platform={RuntimeInformationExtensions.PlatformName()}");
+        await languageService.GetLanguagesAsync(
+            $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}");
     var language = languages.First();
     languageService.UpdateLocalLanguage(ref language, new LocalLanguage
     {

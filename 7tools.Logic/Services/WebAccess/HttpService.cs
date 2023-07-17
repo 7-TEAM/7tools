@@ -21,4 +21,11 @@ public class HttpService : IHttpService
     {
         throw new NotImplementedException();
     }
+
+    public async Task DownloadFileAsync(string url, string path)
+    {
+        await using var stream = await _client.GetStreamAsync(url);
+        await using var fileStream = new FileStream(path, FileMode.OpenOrCreate);
+        await stream.CopyToAsync(fileStream);
+    }
 }
