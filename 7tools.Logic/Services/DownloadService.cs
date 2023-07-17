@@ -12,8 +12,9 @@ public class DownloadService
         _http = http;
     }
 
-    public async Task DownloadLanguage(Language language)
+    public async Task DownloadLanguageAsync(Language language)
     {
-        await _http.DownloadFileAsync(language.LocalLanguage.Version.Url, language.LocalLanguage.DownloadPath);
+        var localLanguage = language.LocalLanguage;
+        await _http.DownloadFileAsync(localLanguage.PickedVersion.Url, localLanguage.DownloadPath);
     }
 }
