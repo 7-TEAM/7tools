@@ -25,28 +25,43 @@
                 AllowAutoHide="false"
                 Margin="5,0"
                 Width="950">
-                <ItemsControl
-                    ItemsSource="{Binding Languages}">
+
+                <ItemsControl 
+                    ItemsSource="{Binding LanguageButtons}">
+
                     <ItemsControl.ItemsPanel>
+
                         <ItemsPanelTemplate>
                             <UniformGrid Rows="2" />
                         </ItemsPanelTemplate>
+
                     </ItemsControl.ItemsPanel>
+
                     <ItemsControl.ItemTemplate>
+
                         <DataTemplate>
-                            <ToggleButton Content="{Binding Name}" Width="180" Height="150" Margin="5,5" />
+                            <ToggleButton 
+                                Content="{Binding Name}" 
+                                Width="180" 
+                                Height="150" 
+                                Margin="5,5"
+                                IsChecked="{Binding IsChecked}"/>
                         </DataTemplate>
+
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <Button
-                Content="Pobierz"
+
+            <Button 
+                Content="Pobierz" 
                 Width="950"
                 Height="50"
                 Margin="0,20"
-                HorizontalAlignment="Center" />
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"/>
+
         </StackPanel>
     </Viewbox>
-
 
 </Window>
