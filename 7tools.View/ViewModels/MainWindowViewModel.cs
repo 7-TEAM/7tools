@@ -14,7 +14,6 @@ namespace SvTools.View.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public List<Language> Languages {get; set;}
-    public List<LanguageButton> LanguageButtons {get; set;}
 
     public bool IsDownloadingButtonPressed {get; set;}
 
@@ -25,7 +24,6 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         Languages = new List<Language>();
-        LanguageButtons = new List<LanguageButton>();
         var fileService = new FileService();
         var httpService = new HttpService(new HttpClient());
         _languageService = new LanguageService(fileService, httpService, FileName);
@@ -45,8 +43,6 @@ public class MainWindowViewModel : ViewModelBase
                         $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}"
                     )
                 );
-
-                Languages.ForEach(language => LanguageButtons.Add(new LanguageButton(language)));
             }
             catch (Exception)
             {

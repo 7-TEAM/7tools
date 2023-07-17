@@ -27,7 +27,7 @@
                 Width="950">
 
                 <ItemsControl 
-                    ItemsSource="{Binding LanguageButtons}">
+                    ItemsSource="{Binding Languages}">
 
                     <ItemsControl.ItemsPanel>
 
@@ -45,7 +45,7 @@
                                 Width="180" 
                                 Height="150" 
                                 Margin="5,5"
-                                IsChecked="{Binding IsChecked}"/>
+                                IsChecked="{Binding LocalLanguage.IsChecked}"/>
                         </DataTemplate>
 
                     </ItemsControl.ItemTemplate>
