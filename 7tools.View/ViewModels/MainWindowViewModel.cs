@@ -2,15 +2,21 @@
 using System.Net.Http;
 using System;
 
-using System.ComponentModel; 
+using System.ComponentModel;
 using System.Runtime.CompilerServices; 
-using System.Diagnostics;
 using System.Threading.Tasks;
+using Avalonia.Styling;
+using Avalonia.Threading;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Base;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Enums;
 using SvTools.Models;
 using SvTools.Models.Extensions;
 using SvTools.Services;
 using SvTools.Services.DataAccess;
 using SvTools.Services.WebAccess;
+using Icon = System.Drawing.Icon;
 using Timer = System.Timers.Timer;
 
 namespace SvTools.View.ViewModels;
@@ -24,6 +30,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     private const string FileName = "config.json";
     private readonly LanguageService _languageService;
     private readonly DownloadService _downloadService;
+    private readonly DispatcherTimer _disTimer;
+    
 
     public event PropertyChangedEventHandler PropertyChanged; 
 
@@ -34,31 +42,35 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         var httpService = new HttpService(new HttpClient());
         _languageService = new LanguageService(fileService, httpService, FileName);
         _downloadService = new DownloadService(httpService);
+        _disTimer = new DispatcherTimer();
         UpdateLanguages();
     }
-
+    
     private void UpdateLanguages()
     {
-        var timer = new Timer(5000);
-        async Task UpdateTimerAsync()
-        {
-            try
-            {
-                Languages = new List<Language>(
-                    await _languageService.GetLanguagesAsync(
-                        $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}"
-                    )
-                );
-                NotifyPropertyChanged(nameof(Languages));
-            }
-            catch (Exception)
-            {
+        UpdateTimerAsync(null, null);
+        _disTimer.Interval = TimeSpan.FromHours(3);
+        _disTimer.Tick += UpdateTimerAsync;
+        _disTimer.Start();
+    }
 
-            }
-             
+    private async void UpdateTimerAsync(object? sender, EventArgs e)
+    {
+        try
+        {
+            Languages = new List<Language>(
+                await _languageService.GetLanguagesAsync(
+                    $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}"
+                )
+            );
+            NotifyPropertyChanged(nameof(Languages));
         }
-        timer.Elapsed += (_, _) => UpdateTimerAsync().GetAwaiter().GetResult();
-        timer.Enabled = true;
+        catch (Exception)
+        {
+            var messageBox = MessageBoxManager
+                .GetMessageBoxStandard("Błąd", "Nie udało się pobrać języków.");
+            await messageBox.ShowAsync();
+        }
     }
 
     private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")  
