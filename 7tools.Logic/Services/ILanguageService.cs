@@ -5,5 +5,5 @@ namespace SvTools.Services;
 public interface ILanguageService
 {
     Task<Language[]> GetLanguagesAsync(string endpoint);
-    void UpdateLocalLanguage(ref Language language, LocalLanguage toChange);
+    Task<Language> UpdateLocalLanguage(Language language, LocalLanguage toChange);
 }

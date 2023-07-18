@@ -3,10 +3,10 @@
 namespace SvTools.Services.DataAccess;
 
 public class FileService : IFileService
-{
-    public string ReadContent(string fileName)
+{ 
+    public async Task<string> ReadContentAsync(string fileName)
     {
-        return File.ReadAllText(fileName);
+        return await File.ReadAllTextAsync(fileName);
     }
 
     public JObject ReadJsonObject(string content)
@@ -19,9 +19,9 @@ public class FileService : IFileService
         return JArray.Parse(content);
     }
 
-    public void Write(string fileName, string content)
+    public async Task WriteAsync(string fileName, string content)
     {
-        File.WriteAllText(fileName, content);
+        await File.WriteAllTextAsync(fileName, content);
     }
 
     public void UnpackLanguage(string path)

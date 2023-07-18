@@ -4,7 +4,7 @@ namespace SvTools.Services.DataAccess;
 
 public interface IFileReader
 {
-    string ReadContent(string fileName);
+    Task<string> ReadContentAsync(string fileName);
     JObject ReadJsonObject(string content);
     JArray ReadJsonArray(string content);
 }

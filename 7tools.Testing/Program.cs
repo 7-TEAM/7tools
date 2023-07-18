@@ -15,11 +15,12 @@ try
         await languageService.GetLanguagesAsync(
             $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}");
     var language = languages.First();
-    languageService.UpdateLocalLanguage(ref language, new LocalLanguage
+    var newLanguage = await languageService.UpdateLocalLanguage(language, new LocalLanguage
     {
         IsChecked = true,
         ShouldBeEnvironmentVariable = true
     });
+    languages[Array.FindIndex(languages, l => l.Id == language.Id)] = newLanguage;
 }
 catch (Exception e)
 {

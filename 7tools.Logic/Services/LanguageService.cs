@@ -22,21 +22,22 @@ public class LanguageService : ILanguageService
     public async Task<Language[]> GetLanguagesAsync(string endpoint)
     {
         var languagesFromHttp = await GetLanguagesFromHttpAsync($"{endpoint}");
-        return ModifyLanguagesFromFile(languagesFromHttp);
+        return await ModifyLanguagesFromFile(languagesFromHttp);
     }
 
-    public void UpdateLocalLanguage(ref Language language, LocalLanguage toChange)
+    public async Task<Language> UpdateLocalLanguage(Language language, LocalLanguage toChange)
     {
-        var jsonLocalLanguages = ReadLocalLanguages();
+        var jsonLocalLanguages = await ReadLocalLanguages();
         language.LocalLanguage = toChange;
         jsonLocalLanguages[language.Id + ""] = JsonConvert.SerializeObject(language.LocalLanguage, Formatting.None);
-        _file.Write(_fileName, jsonLocalLanguages.ToString());
+        await _file.WriteAsync(_fileName, jsonLocalLanguages.ToString());
+        return language;
     }
 
-    private JObject ReadLocalLanguages()
+    private async Task<JObject> ReadLocalLanguages()
     {
-        if (!File.Exists(_fileName)) _file.Write(_fileName, "{}");
-        return _file.ReadJsonObject(_file.ReadContent(_fileName));
+        if (!File.Exists(_fileName)) await _file.WriteAsync(_fileName, "{}");
+        return _file.ReadJsonObject(await _file.ReadContentAsync(_fileName));
     }
 
     private async Task<Language[]> GetLanguagesFromHttpAsync(string endpoint)
@@ -56,15 +57,14 @@ public class LanguageService : ILanguageService
             : JsonConvert.DeserializeObject<LocalLanguage>(jsonLocalLanguage.ToString());
     }
 
-    private Language[] ModifyLanguagesFromFile(Language[] languages)
+    private async Task<Language[]> ModifyLanguagesFromFile(Language[] languages)
     {
-        var jsonLocalLanguages = ReadLocalLanguages();
+        var jsonLocalLanguages = await ReadLocalLanguages();
         var modifiedLanguages = new List<Language>();
         foreach (var language in languages)
         {
             var localLanguage = GetLocalLanguage(language, jsonLocalLanguages);
             if (localLanguage is not null) language.LocalLanguage = localLanguage;
-            ;
             modifiedLanguages.Add(language);
         }
 
