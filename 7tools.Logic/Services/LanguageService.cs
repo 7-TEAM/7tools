@@ -44,7 +44,6 @@ public class LanguageService : ILanguageService
     {
         string response;
         response = await _http.SendGet(endpoint);
-
         var jsonResponse = _file.ReadJsonArray(response);
         return JsonConvert.DeserializeObject<Language[]>(jsonResponse.ToString());
     }

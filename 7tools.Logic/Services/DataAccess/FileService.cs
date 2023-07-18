@@ -3,7 +3,7 @@
 namespace SvTools.Services.DataAccess;
 
 public class FileService : IFileService
-{ 
+{
     public async Task<string> ReadContentAsync(string fileName)
     {
         return await File.ReadAllTextAsync(fileName);
