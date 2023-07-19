@@ -17,11 +17,6 @@ public class HttpService : IHttpService
         return await response.Content.ReadAsStringAsync();
     }
 
-    public async Task<string> SendPost(string endpoint)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task DownloadFileAsync(string url, string path)
     {
         await using var stream = await _client.GetStreamAsync(url);

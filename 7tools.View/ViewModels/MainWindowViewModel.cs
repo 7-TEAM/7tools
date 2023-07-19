@@ -58,11 +58,14 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         try
         {
+            var copyOfLanguages = Languages;
             Languages = new List<Language>(
                 await _languageService.GetLanguagesAsync(
                     $"api/languages?platform={RuntimeInformationExtensions.PlatformName()}"
                 )
             );
+            await UpdateLanguages(
+                _languageService.GetLanguagesToUpdate(copyOfLanguages.ToArray(), Languages.ToArray()));
             NotifyPropertyChanged(nameof(Languages));
         }
         catch (Exception)
@@ -70,6 +73,15 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             var messageBox = MessageBoxManager
                 .GetMessageBoxStandard("Błąd", "Nie udało się pobrać języków.");
             await messageBox.ShowAsync();
+        }
+    }
+
+    private async Task UpdateLanguages(Language[] languagesToUpdate)
+    {
+        foreach (var language in languagesToUpdate)
+        {
+            await _downloadService.DownloadLanguageAsync(language);
+            await _languageService.UpdateLocalLanguageAsync(language, language.LocalLanguage);
         }
     }
 

@@ -3,14 +3,15 @@ using Newtonsoft.Json.Linq;
 using SvTools.Models;
 using SvTools.Services.DataAccess;
 using SvTools.Services.WebAccess;
+using Version = SvTools.Models.Version;
 
 namespace SvTools.Services;
 
 public class LanguageService : ILanguageService
 {
     private readonly IFileService _file;
-    private readonly string _fileName;
     private readonly IHttpService _http;
+    private readonly string _fileName;
 
     public LanguageService(IFileService file, IHttpService http, string fileName)
     {
@@ -25,13 +26,32 @@ public class LanguageService : ILanguageService
         return await ModifyLanguagesFromFile(languagesFromHttp);
     }
 
-    public async Task<Language> UpdateLocalLanguage(Language language, LocalLanguage toChange)
+    public async Task<Language> UpdateLocalLanguageAsync(Language language, LocalLanguage toChange)
     {
         var jsonLocalLanguages = await ReadLocalLanguages();
         language.LocalLanguage = toChange;
         jsonLocalLanguages[language.Id + ""] = JsonConvert.SerializeObject(language.LocalLanguage, Formatting.None);
         await _file.WriteAsync(_fileName, jsonLocalLanguages.ToString());
         return language;
+    }
+
+    public Language[] GetLanguagesToUpdate(Language[] oldLanguages, Language[] currentLanguages)
+    {
+        var selectedLanguages = new List<Language>();
+        var languagesToUpdate = new List<Language>();
+        foreach (var oldLanguage in oldLanguages)
+        {
+            if (oldLanguage.LocalLanguage.IsChecked) selectedLanguages.Add(oldLanguage);
+        }
+        foreach (var currentLanguage in currentLanguages)
+        {
+            var selectedLanguage = selectedLanguages.FirstOrDefault(l => l.Id == currentLanguage.Id);
+            if (selectedLanguage is null || selectedLanguage.LocalLanguage.PickedVersion.Iteration == currentLanguage.CurrentVersion.Iteration) continue;
+            currentLanguage.LocalLanguage = selectedLanguage.LocalLanguage;
+            currentLanguage.LocalLanguage.PickedVersion = currentLanguage.CurrentVersion;
+            languagesToUpdate.Add(currentLanguage);
+        }
+        return languagesToUpdate.ToArray();
     }
 
     private async Task<JObject> ReadLocalLanguages()
